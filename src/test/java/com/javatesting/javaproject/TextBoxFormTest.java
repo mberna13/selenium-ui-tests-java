@@ -37,15 +37,17 @@ public class TextBoxFormTest {
 
     @Step("Click Submit button")
     private void submitForm() {
-        $("#submit").click();
+        $("#submit").scrollTo().click();
     }
 
     @Step("Verify output section has correct submitted values")
     private void verifyOutput(String fullName, String email, String currentAddress, String permanentAddress) {
         $("#output").shouldBe(visible);
-        $("#name").shouldHave(text(fullName));
-        $("#email").shouldHave(text(email));
-        $("#currentAddress").shouldHave(text(currentAddress));
-        $("#permanentAddress").shouldHave(text(permanentAddress));
+        $("#output #name").shouldHave(text("Name:" + fullName));
+        $("#output #email").shouldHave(text("Email:" + email));
+        $("#output #currentAddress").shouldHave(text("Current Address :" + currentAddress));
+        // The line below fails because there is a typo on the site's form page.
+        // Actual value: text="Permananet Address :456 Oak Avenue"
+        $("#output #permanentAddress").shouldHave(text("Permanent Address :" + permanentAddress));
     }
 }
